@@ -6,7 +6,7 @@ cmake_minimum_required (VERSION 3.8)
 project ("AISD-2")
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (AISD-2 "AISD-2.cpp" "AISD-2.h")
+add_executable (AISD-2 "AISD-2.cpp" "Node.h" "LinkedList.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET AISD-2 PROPERTY CXX_STANDARD 20)

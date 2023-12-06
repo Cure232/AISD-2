@@ -1,7 +1,7 @@
 ﻿// AISD-2.cpp: определяет точку входа для приложения.
 //
 
-#include "AISD-2.h"
+#include "LinkedList.h"
 
 using namespace std;
 
