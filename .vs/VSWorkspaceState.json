@@ -1,8 +1,4 @@
 {
-  "ExpandedNodes": [
-    ""
-  ],
-  "PreviewInSolutionExplorer": false,
   "OutputFoldersPerTargetSystem": {
     "Локальный компьютер": [
       "out\\build\\x64-debug",
@@ -14,5 +10,10 @@
       "out\\build\\x86-release",
       "out\\install\\x86-release"
     ]
-  }
+  },
+  "ExpandedNodes": [
+    ""
+  ],
+  "SelectedNode": "\\LinkedList.h",
+  "PreviewInSolutionExplorer": false
 }
