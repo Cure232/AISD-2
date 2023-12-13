@@ -52,30 +52,32 @@ public:
 	}
 
 	~LinkedList() {
-		Node* iter_ptr;
-		Node* next_node = iter_ptr->next;
-
-		for (iter_ptr = this->head_ptr; iter_ptr != this->tail_ptr; next_node = iter_ptr->next) {
+		if (length > 0) {
+			Node* iter_ptr = this->head_ptr;
+			Node* next_node;
+			for (next_node = iter_ptr->next; iter_ptr != this->tail_ptr; next_node = iter_ptr->next) {
+				delete(iter_ptr);
+				iter_ptr = next_node;
+			}
 			delete(iter_ptr);
-			iter_ptr = next_node;
 		}
-
-		delete(iter_ptr);
-		delete(this);
+		tail_ptr = nullptr;
+		head_ptr = nullptr;
+		length = 0;
 	}
 
 	void push_tail(const T& item) {
 		this->length += 1;
-		Node node = new Node(item);
+		Node* node = new Node(item);
 
 		if (tail_ptr != nullptr) {
-			tail_ptr->next = &node;
-			node.prev = tail_ptr;
-			tail_ptr = &node;
+			tail_ptr->next = node;
+			node->prev = tail_ptr;
+			tail_ptr = node;
 		}
 		else {
-			tail_ptr = &node;
-			head_ptr = &node;
+			tail_ptr = node;
+			head_ptr = node;
 		}
 	}
 
@@ -91,16 +93,16 @@ public:
 
 	void push_head(const T& item) {
 		this->length += 1;
-		Node node = new Node(item);
+		Node* node = new Node(item);
 
 		if (head_ptr != nullptr) {
-			head_ptr->prev = &node;
-			node.next = head_ptr;
-			head_ptr = &node;
+			head_ptr->prev = node;
+			node->next = head_ptr;
+			head_ptr = node;
 		}
 		else {
-			tail_ptr = &node;
-			head_ptr = &node;
+			tail_ptr = node;
+			head_ptr = node;
 		}
 	}
 
@@ -108,14 +110,13 @@ public:
 		if (list.length > 0) {
 			Node* iter_ptr;
 			for (iter_ptr = list.head_ptr; iter_ptr != list.tail_ptr; iter_ptr = iter_ptr->next) {
-				this->push_tail(iter_ptr->data);
+				this->push_head(iter_ptr->data);
 			}
 			this->push_head(iter_ptr->data);
 		}
 	}
 
 	T pop_head() {
-
 		if (head_ptr != nullptr) {
 			T content = head_ptr->data;
 			
@@ -132,7 +133,7 @@ public:
 			this->length -= 1;
 			return content;
 		}
-		else throw runtime_error;
+		else throw runtime_error("slkdgjos;ag");
 	}
 
 	T pop_tail() {
@@ -145,22 +146,24 @@ public:
 				tail_ptr->next = nullptr;
 			}
 			else {
-				delete(this);
+				delete(tail_ptr);
 				head_ptr = nullptr;
 				tail_ptr = nullptr;
 			}
 			this->length -= 1;
 			return content;
 		}
-		else throw runtime_error;
+		else throw runtime_error("dfsgfd");
 	}
 
 	void delete_node(const T& to_delete) {
 		Node* iter_ptr = head_ptr;
-		while (length > 0) {
+		Node* next_node;
+		Node* prev_node;
+		while (iter_ptr != nullptr && length > 0) {
+			next_node = iter_ptr->next;
+			prev_node = iter_ptr->prev;
 			if (iter_ptr->data == to_delete) {
-				Node* next_node = iter_ptr->next;
-				Node* prev_node = iter_ptr->prev;
 
 				if (next_node != nullptr) {
 					next_node->prev = iter_ptr->prev;
@@ -168,12 +171,18 @@ public:
 				if (prev_node != nullptr) {
 					prev_node->next = iter_ptr->next;
 				}
+
+				if (iter_ptr == this->head_ptr) {
+					head_ptr = next_node;
+				}
+				if (iter_ptr == this->tail_ptr) {
+					head_ptr = prev_node;
+				}
+
 				delete(iter_ptr);
 				length -= 1;
-
-				iter_ptr = next_node;
 			}
-			iter_ptr = iter_ptr->next;
+			iter_ptr = next_node;
 		}
 	}
 
@@ -185,7 +194,7 @@ public:
 			}
 			return iter_ptr->data;
 		}
-		else throw out_of_range;
+		else throw out_of_range("sd");
 	}
 
 	T& operator[](const int& i) {
@@ -194,8 +203,8 @@ public:
 			for (int j = 0; j < i; j++) {
 				iter_ptr = iter_ptr->next;
 			}
-			return &(iter_ptr->data);
+			return (iter_ptr->data);
 		}
-		else throw out_of_range;
+		else throw runtime_error("bs");
 	}
 };
